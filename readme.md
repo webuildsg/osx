@@ -19,9 +19,13 @@
 - run the app from command line without building it
 
   ```sh
-  npm run build
+  npm start
   ```
 - build the app to create `WeBuildSG.app`
+
+  ```sh
+  npm run build
+  ```
 
 ## credits
 
