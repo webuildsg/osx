@@ -23,6 +23,11 @@
   ```
 - build the app to create `WeBuildSG.app`
 
+## credits
+
+1. [menubar](https://github.com/maxogden/menubar)
+- [boilerplate](https://github.com/sindresorhus/electron-boilerplate/tree/master/boilerplate)
+
 ## license
 
 [MIT](/LICENSE)
