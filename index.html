@@ -1,0 +1,63 @@
+<html>
+<head>
+  <title>We Build SG</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <h1><img src="logo.png" alt="Logo" class="logo">We Build SG</h1>
+
+  <script id="template-events" type="text/x-handlebars-template">
+    <ul class="list">
+      {{#events}}
+      <li>
+        <p class="info"><a href="{{url}}" target="_blank">{{name}}</a></p>
+        <p>by <strong>{{group_name}}</strong> on <strong>{{formatted_time}}</strong></p>
+        <p>{{location}}</p>
+      </li>
+      {{/events}}
+    </ul>
+  </script>
+
+  <script id="template-repos" type="text/x-handlebars-template">
+    <ul class="list">
+      {{#repos}}
+      <li>
+        <p class="info"><a href="{{html_url}}" target="_blank">{{name}}</a></p>
+        <p>{{description}}</p>
+        <p><span class="spacing">★ {{stargazers_count}}</span><span class="spacing">{{language}}</span></p>
+      </li>
+      {{/repos}}
+    </ul>
+  </script>
+
+  <p>3 Upcoming events and <a href="https://webuild.sg">checkout more</a></p>
+  <div id="result-events"></div>
+  <p>3 Recently updated repos and <a href="https://webuild.sg">checkout more</a></p>
+  <div id="result-repos"></div>
+
+  <script src="lib/handlebars.js"></script>
+  <script>
+    function renderTemplate(type, data) {
+      var templateSource = document.getElementById('template-' + type).innerHTML;
+      var template = Handlebars.compile(templateSource);
+      var resultsPlaceholder = document.getElementById('result-' + type);
+      resultsPlaceholder.innerHTML = template(data);
+    }
+
+    function callAPI(type) {
+      require('request').get({
+        url: 'https://webuild.sg/api/v1/' + type,
+        json: true
+      }, function(e, r, body) {
+        var data = {};
+        data[type] = body[type].slice(0, 3);
+        renderTemplate(type, data);
+      });
+    }
+
+    callAPI('events');
+    callAPI('repos');
+  </script>
+</body>
+</html>

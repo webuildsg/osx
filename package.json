@@ -1,0 +1,19 @@
+{
+  "name": "webuildsg-menubar",
+  "version": "1.0.0",
+  "description": "a tiny os x menubar app to display the upcoming events and recently updated repos from webuild.sg",
+  "main": "index.js",
+  "scripts": {
+    "build": "electron-packager . WeBuildSG --platform=darwin --arch=x64 --version=0.26.0 --ignore=node_modules/electron --icon=Icon.icns",
+    "start": "electron ."
+  },
+  "license": "MIT",
+  "dependencies": {
+    "menubar": "^2.0.11",
+    "request": "^2.55.0"
+  },
+  "devDependencies": {
+    "electron-packager": "^4.0.2",
+    "electron-prebuilt": "0.26.1"
+  }
+}
