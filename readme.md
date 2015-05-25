@@ -31,7 +31,7 @@
 
 1. [menubar](https://github.com/maxogden/menubar)
 - [boilerplate](https://github.com/sindresorhus/electron-boilerplate/tree/master/boilerplate)
-- [css loader](http://projects.lukehaas.me/css-loaders/)
+- [css loader](https://github.com/jlong/css-spinners/blob/master/css/spinner/three-quarters.css)
 
 ## license
 
