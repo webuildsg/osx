@@ -9,3 +9,4 @@ var mb = menubar({
 mb.on('ready', function ready () {
   console.log('Checkout We Build SG menubar app!')
 })
+
