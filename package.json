@@ -6,7 +6,7 @@
   "scripts": {
     "build": "electron-packager . WeBuildSG --platform=darwin --arch=x64 --version=0.26.0 --ignore=node_modules/electron --icon=Icon.icns",
     "start": "electron .",
-    "ci": "jshint index.js --config .jshintrc"
+    "test": "jshint index.js --config .jshintrc"
   },
   "license": "MIT",
   "dependencies": {
