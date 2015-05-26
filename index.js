@@ -14,6 +14,8 @@ mb.on('ready', function ready () {
   console.log('Checkout We Build SG menubar app!');
 
   ipc.on('event', function(event, arg) {
-    if(arg === 'quit') app.quit();
+    if(arg === 'quit') {
+      app.quit();
+    }
   });
 });
