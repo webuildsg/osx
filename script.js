@@ -37,6 +37,10 @@ function callAPI(type, willNotify) {
   });
 }
 
+function openUrl(url) {
+  require('shell').openExternal(url);
+}
+
 document.getElementById('quit').addEventListener('click', function() {
   ipc.sendSync('event', 'quit');
 })
