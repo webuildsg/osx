@@ -17,11 +17,16 @@ header {
   text-align: center;
 }
 
-header h1 {
-  font-size: 60px;
-  font-weight: 100;
+h1 {
+  font-size: 4em;
+  font-weight: 200;
   margin: 0;
   padding: 0;
+  display: inline;
+}
+
+h2 {
+  font-weight: normal;
 }
 
 p {
@@ -35,6 +40,25 @@ a:link, a:visited {
 
 a:hover, a:active {
   text-decoration: underline;
+}
+
+.pull-right {
+  float: right;
+}
+
+.btn {
+  font-size: 2em;
+  border-radius: 5px;
+  background-color: white;
+  outline: none;
+  border: 1px solid #808080;
+  padding: .3em .5em;
+  margin-top: .4em;
+}
+
+.btn:hover {
+  background: #6bc1e3;
+  cursor: pointer;
 }
 
 .info {

@@ -1,4 +1,5 @@
 var path = require('path');
+var ipc = require('ipc');
 
 function renderTemplate(type, data) {
   var templateSource = document.getElementById('template-' + type).innerHTML;
@@ -21,7 +22,7 @@ function createNotification(events) {
   })
 }
 
-function callAPI(type) {
+function callAPI(type, willNotify) {
   require('request').get({
     url: 'https://webuild.sg/api/v1/' + type,
     json: true
@@ -29,18 +30,22 @@ function callAPI(type) {
     var data = {};
     data[type] = body[type].slice(0, 3);
 
-    if (type === 'events') {
+    if (type === 'events' && willNotify) {
       createNotification(data[type] );
     }
     renderTemplate(type, data);
   });
 }
 
-callAPI('events');
-callAPI('repos');
+document.getElementById('quit').addEventListener('click', function() {
+  ipc.sendSync('event', 'quit');
+})
+
+callAPI('events', false);
+callAPI('repos', false);
 
 var CronJob = require('cron').CronJob;
 new CronJob('0 0,30 * * * *', function() {
-  callAPI('events');
-  callAPI('repos');
+  callAPI('events', true);
+  callAPI('repos', true);
 }, null, true, 'Asia/Singapore');
