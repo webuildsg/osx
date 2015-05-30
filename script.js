@@ -1,5 +1,6 @@
 var path = require('path');
 var ipc = require('ipc');
+var notifier = require('node-notifier');
 
 function renderTemplate(type, data) {
   var templateSource = document.getElementById('template-' + type).innerHTML;
@@ -12,7 +13,7 @@ function createNotification(events) {
   // TODO: if the upcoming event is in an hour, only then notify
   // FIX: display separate notifications without replacing each other
   events.forEach(function(event) {
-    require('node-notifier').notify({
+    notifier.notify({
       'title': event.name,
       'message': 'by ' + event.group_name + ' on ' + event.formatted_time,
       'icon': path.join(__dirname, 'logo.png'),
@@ -22,24 +23,30 @@ function createNotification(events) {
   })
 }
 
-function callAPI(type, willNotify) {
-  require('request').get({
-    url: 'https://webuild.sg/api/v1/' + type,
-    json: true
-  }, function(e, r, body) {
+function callAPI(type, willNotify){
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function(){
+    var body = JSON.parse(this.responseText);
     var data = {};
     data[type] = body[type].slice(0, 3);
-
     if (type === 'events' && willNotify) {
       createNotification(data[type] );
     }
     renderTemplate(type, data);
-  });
+  };
+  xhr.open('GET', 'https://webuild.sg/api/v1/' + type, true);
+  xhr.send();
 }
 
-function openUrl(url) {
-  require('shell').openExternal(url);
-}
+var shell = require('shell');
+document.body.addEventListener('click', function(e){
+  var el = e.target;
+  if (!el) return;
+  if (el.tagName.toLowerCase() == 'a' && el.target == '_blank'){
+    e.preventDefault();
+    shell.openExternal(el.href);
+  }
+});
 
 document.getElementById('quit').addEventListener('click', function() {
   ipc.sendSync('event', 'quit');
