@@ -3,10 +3,12 @@
 var menubar = require('menubar');
 var app = require('app');
 var ipc = require('ipc');
+var path = require('path');
 
 var mb = menubar({
   width: 600,
   height: 480,
+  index: 'file://' + path.join(__dirname, 'index.html'),
   icon: 'Icon.png',
   preloadWindow: true
 });
