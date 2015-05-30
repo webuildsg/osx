@@ -11,7 +11,7 @@
     <ul class="list">
       {{#events}}
       <li>
-        <p class="info"><a href="#" rel="external nofollow" onclick="openUrl('{{url}}')">{{name}}</a></p>
+        <p class="info"><a href="{{url}}" target="_blank">{{name}}</a></p>
         <p>by <strong>{{group_name}}</strong> on <strong>{{formatted_time}}</strong></p>
         <p>{{location}}</p>
       </li>
@@ -23,7 +23,7 @@
     <ul class="list">
       {{#repos}}
       <li>
-        <p class="info"><a href="#" rel="external nofollow" onclick="openUrl('{{html_url}}')">{{name}}</a></p>
+        <p class="info"><a href="{{html_url}}" target="_blank">{{name}}</a></p>
         <p>{{description}}</p>
         <p><span class="spacing">★ {{stargazers_count}}</span><span class="spacing">{{language}}</span></p>
       </li>
@@ -31,9 +31,9 @@
     </ul>
   </script>
 
-  <h2>3 Upcoming events and <a href="https://webuild.sg">checkout more</a></h2>
+  <h2>3 Upcoming events and <a href="https://webuild.sg" target="_blank">checkout more</a></h2>
   <div id="result-events"><div class="loader">Loading...</div></div>
-  <h2>3 Recently updated repos and <a href="https://webuild.sg">checkout more</a></h2>
+  <h2>3 Recently updated repos and <a href="https://webuild.sg" target="_blank">checkout more</a></h2>
   <div id="result-repos"><div class="loader">Loading...</div></div>
 
   <script src="lib/handlebars.js"></script>

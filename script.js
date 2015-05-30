@@ -37,9 +37,15 @@ function callAPI(type, willNotify) {
   });
 }
 
-function openUrl(url) {
-  require('shell').openExternal(url);
-}
+var shell = require('shell');
+document.body.addEventListener('click', function(e){
+  var el = e.target;
+  if (!el) return;
+  if (el.tagName.toLowerCase() == 'a' && el.target == '_blank'){
+    e.preventDefault();
+    shell.openExternal(el.href);
+  }
+});
 
 document.getElementById('quit').addEventListener('click', function() {
   ipc.sendSync('event', 'quit');
