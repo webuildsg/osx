@@ -1,5 +1,6 @@
 var path = require('path');
 var ipc = require('ipc');
+var notifier = require('node-notifier');
 
 function renderTemplate(type, data) {
   var templateSource = document.getElementById('template-' + type).innerHTML;
@@ -12,7 +13,7 @@ function createNotification(events) {
   // TODO: if the upcoming event is in an hour, only then notify
   // FIX: display separate notifications without replacing each other
   events.forEach(function(event) {
-    require('node-notifier').notify({
+    notifier.notify({
       'title': event.name,
       'message': 'by ' + event.group_name + ' on ' + event.formatted_time,
       'icon': path.join(__dirname, 'logo.png'),
