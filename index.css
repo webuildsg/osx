@@ -1,7 +1,7 @@
 html,
 body {
-  padding: 5px;
   margin: 0;
+  padding: 0;
   font: menu;
   user-select: none;
   -webkit-user-select: none;
@@ -10,9 +10,10 @@ body {
 
 h1 {
   margin: 0;
-  padding: 0;
+  padding: 5px;
   font-size: 1.4em;
   vertical-align: middle;
+  color: #444;
 }
 h1 img{
   vertical-align: middle;
@@ -20,7 +21,10 @@ h1 img{
 
 h2 {
   font-size: 1.1em;
-  font-weight: normal;
+  font-weight: bold;
+  padding: 5px 10px;
+  margin: 0;
+  color: #666;
 }
 
 p {
@@ -36,20 +40,13 @@ a:hover, a:active {
   text-decoration: underline;
 }
 
+#quit-container{
+  text-align: right;
+  padding: 5px 10px;
+}
 #quit{
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 16px;
-  height: 16px;
-  font-size: 16px;
-  line-height: 16px;
-  overflow: hidden;
-  text-align: center;
   color: #000;
   opacity: .5;
-  padding: 5px 10px;
-  font-weight: bold;
 }
 #quit:hover{
   opacity: 1;
@@ -61,14 +58,22 @@ a:hover, a:active {
   color: #228db7;
 }
 
+.desc {
+  opacity: .7;
+}
+.location{
+  opacity: .6;
+}
+
 .list {
   padding: 0;
+  margin: 0;
   list-style-type: none;
 }
 
 .list li {
-  margin: 0 0 .8em 0;
-  padding-left: .5em;
+  margin: 0;
+  padding: 6px;
 }
 
 .list li:nth-child(4n+1) {

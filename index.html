@@ -5,15 +5,14 @@
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
-  <a href="#" id="quit">&times;</a>
   <h1><img src="logo.png" alt="Logo" class="logo" width="20" height="20"> We Build SG</h1>
   <script id="template-events" type="text/x-handlebars-template">
     <ul class="list">
       {{#events}}
       <li>
         <p class="info"><a href="{{url}}" target="_blank">{{name}}</a></p>
-        <p>by <strong>{{group_name}}</strong> on <strong>{{formatted_time}}</strong></p>
-        <p>{{location}}</p>
+        <p class="desc">by <strong>{{group_name}}</strong> on <strong>{{formatted_time}}</strong></p>
+        <p class="location">{{location}}</p>
       </li>
       {{/events}}
     </ul>
@@ -24,17 +23,18 @@
       {{#repos}}
       <li>
         <p class="info"><a href="{{html_url}}" target="_blank">{{name}}</a></p>
-        <p>{{description}}</p>
+        <p class="desc">{{description}}</p>
         <p><span class="spacing">★ {{stargazers_count}}</span><span class="spacing">{{language}}</span></p>
       </li>
       {{/repos}}
     </ul>
   </script>
 
-  <h2>3 Upcoming events and <a href="https://webuild.sg" target="_blank">checkout more&hellip;</a></h2>
+  <h2>Upcoming events and <a href="https://webuild.sg" target="_blank">checkout more&hellip;</a></h2>
   <div id="result-events"><div class="loader">Loading...</div></div>
-  <h2>3 Recently updated repos and <a href="https://webuild.sg" target="_blank">checkout more&hellip;</a></h2>
+  <h2>Recently updated repos and <a href="https://webuild.sg" target="_blank">checkout more&hellip;</a></h2>
   <div id="result-repos"><div class="loader">Loading...</div></div>
+  <div id="quit-container"><a href="#" id="quit">Quit</a></div>
 
   <script src="lib/handlebars.js"></script>
   <script src="script.js"></script>
