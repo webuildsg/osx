@@ -9,8 +9,7 @@ var mb = menubar({
   width: 600,
   height: 480,
   index: 'file://' + path.join(__dirname, 'index.html'),
-  icon: 'Icon.png',
-  preloadWindow: true
+  icon: 'Icon.png'
 });
 
 mb.on('ready', function ready () {
