@@ -22,19 +22,19 @@ function createNotification(events) {
   })
 }
 
-function callAPI(type, willNotify) {
-  require('request').get({
-    url: 'https://webuild.sg/api/v1/' + type,
-    json: true
-  }, function(e, r, body) {
+function callAPI(type, willNotify){
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function(){
+    var body = JSON.parse(this.responseText);
     var data = {};
     data[type] = body[type].slice(0, 3);
-
     if (type === 'events' && willNotify) {
       createNotification(data[type] );
     }
     renderTemplate(type, data);
-  });
+  };
+  xhr.open('GET', 'https://webuild.sg/api/v1/' + type, true);
+  xhr.send();
 }
 
 var shell = require('shell');
