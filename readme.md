@@ -7,7 +7,7 @@
 
 ## getting started
 
-1. download `WeBuildSG.app` and move it to your `Applications` folder.
+1. download [the latest app](https://github.com/webuildsg/osx/releases) and move it to your `Applications` folder.
 - double-click to open the menubar app
 
 ## install
@@ -22,7 +22,7 @@
   ```sh
   npm start
   ```
-- build the app to create `WeBuildSG.app`
+- build the app to create `WeBuildSG.app.zip`
 
   ```sh
   npm run build
