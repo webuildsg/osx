@@ -4,7 +4,8 @@
   "description": "a tiny os x menubar app to display the upcoming events and recently updated repos from webuild.sg",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf WeBuildSG.app && electron-packager . WeBuildSG --platform=darwin --arch=x64 --version=0.26.0 --ignore=node_modules/electron --icon=Icon.icns",
+    "zip": "zip -ryXq WeBuildSG.app.zip WeBuildSG.app",
+    "build": "rm -rf WeBuildSG.app && electron-packager . WeBuildSG --platform=darwin --arch=x64 --version=0.26.0 --ignore=node_modules/electron --icon=Icon.icns && npm run zip",
     "start": "electron .",
     "test": "jshint index.js --config .jshintrc"
   },
