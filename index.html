@@ -1,12 +1,14 @@
 <html>
 <head>
-  <title>We Build SG</title>
+  <title>We Build</title>
   <meta charset="utf-8">
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
   <h1><img src="logo.png" alt="Logo" class="logo" width="20" height="20"> We Build SG</h1>
+
   <script id="template-events" type="text/x-handlebars-template">
+    <h2>Upcoming events and <a href="{{website}}" target="_blank">checkout more&hellip;</a></h2>
     <ul class="list">
       {{#events}}
       <li>
@@ -19,6 +21,7 @@
   </script>
 
   <script id="template-repos" type="text/x-handlebars-template">
+    <h2>Recently updated repos and <a href="{{website}}" target="_blank">checkout more&hellip;</a></h2>
     <ul class="list">
       {{#repos}}
       <li>
@@ -30,11 +33,19 @@
     </ul>
   </script>
 
-  <h2>Upcoming events and <a href="https://webuild.sg" target="_blank">checkout more&hellip;</a></h2>
+  <script id="template-feedback" type="text/x-handlebars-template">
+    <a href="{{feedback}}" target="_blank" class="menu-btn">Feedback</a>
+  </script>
+
   <div id="result-events"><div class="loader">Loading...</div></div>
-  <h2>Recently updated repos and <a href="https://webuild.sg" target="_blank">checkout more&hellip;</a></h2>
   <div id="result-repos"><div class="loader">Loading...</div></div>
-  <div id="quit-container"><a href="#" id="quit">Quit</a></div>
+
+  <div class="menu">
+    <span id="result-feedback"></span>
+    <a href="#" id="quit" class="menu-btn">Quit</a>
+  </div>
+
+  <div id="result-menu"></div>
 
   <script src="lib/handlebars.js"></script>
   <script src="script.js"></script>

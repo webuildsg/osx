@@ -1,5 +1,5 @@
 {
-  "name": "webuildsg-menubar",
+  "name": "webuild-menubar",
   "version": "1.0.0",
   "description": "a tiny os x menubar app to display the upcoming events and recently updated repos from webuild.sg",
   "main": "index.js",

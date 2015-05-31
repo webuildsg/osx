@@ -1,4 +1,4 @@
-# contributing to webuild sg menubar
+# contributing to webuild menubar
 
 :+1::snowflake: thanks for taking the time to contribute! :sunny::gift_heart:
 

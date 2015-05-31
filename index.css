@@ -40,15 +40,17 @@ a:hover, a:active {
   text-decoration: underline;
 }
 
-#quit-container{
+.menu {
   text-align: right;
   padding: 5px 10px;
 }
-#quit{
+
+.menu-btn {
   color: #000;
   opacity: .5;
 }
-#quit:hover{
+
+.menu-btn:hover{
   opacity: 1;
   text-decoration: none;
 }
