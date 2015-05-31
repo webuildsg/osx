@@ -23,19 +23,19 @@ function renderTemplate(type, data) {
 }
 
 function isWithinAnHour(startTime) {
-  moment(startTime, 'DD MMM YYYY, ddd, hh:mm a').isBefore(moment().add(1, 'hour'))
+  return moment(startTime, 'DD MMM YYYY, ddd, hh:mm a').isBefore(moment().add(1, 'hour'))
 }
 
-function createNotification(nextEvent) {
+function createNotification(upcomingEvent) {
   // if upcoming event starts within the next hour,
   // create a notification
-  if (isWithinAnHour(nextEvent.formatted_time)) {
+  if (isWithinAnHour(upcomingEvent.formatted_time)) {
     notifier.notify({
-      'title': nextEvent.name,
-      'message': 'by ' + nextEvent.group_name + ' on ' + nextEvent.formatted_time,
+      'title': upcomingEvent.name,
+      'message': 'by ' + upcomingEvent.group_name + ' on ' + upcomingEvent.formatted_time,
       'icon': path.join(__dirname, 'logo.png'),
       'wait': true,
-      'open': nextEvent.url
+      'open': upcomingEvent.url
     });
   }
 }
