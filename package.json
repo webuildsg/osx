@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "zip": "zip -ryXq WeBuildSG.app.zip WeBuildSG.app",
-    "build": "rm -rf WeBuildSG.app && electron-packager . WeBuildSG --platform=darwin --arch=x64 --version=0.26.0 --ignore=node_modules/electron --icon=Icon.icns && npm run zip",
+    "build": "rm -rf WeBuildSG.app && rm -f WeBuildSG.app.zip  && electron-packager . WeBuildSG --platform=darwin --arch=x64 --version=0.26.0 --ignore=node_modules/electron --icon=Icon.icns && npm run zip",
     "start": "electron .",
     "test": "jshint index.js --config .jshintrc"
   },
