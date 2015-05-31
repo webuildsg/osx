@@ -4,6 +4,7 @@ var ipc = require('ipc');
 var notifier = require('node-notifier');
 var shell = require('shell');
 var CronJob = require('cron').CronJob;
+var moment = require('moment-timezone');
 
 function renderFeedback() {
   var templateSource = document.getElementById('template-feedback').innerHTML;
@@ -21,18 +22,22 @@ function renderTemplate(type, data) {
   resultsPlaceholder.innerHTML = template(data);
 }
 
-function createNotification(events) {
-  // TODO: if the upcoming event is in an hour, only then notify
-  // FIX: display separate notifications without replacing each other
-  events.forEach(function(event) {
+function isWithinAnHour(startTime) {
+  moment(startTime, 'DD MMM YYYY, ddd, hh:mm a').isBefore(moment().add(1, 'hour'))
+}
+
+function createNotification(nextEvent) {
+  // if upcoming event starts within the next hour,
+  // create a notification
+  if (isWithinAnHour(nextEvent.formatted_time)) {
     notifier.notify({
-      'title': event.name,
-      'message': 'by ' + event.group_name + ' on ' + event.formatted_time,
+      'title': nextEvent.name,
+      'message': 'by ' + nextEvent.group_name + ' on ' + nextEvent.formatted_time,
       'icon': path.join(__dirname, 'logo.png'),
       'wait': true,
-      'open': event.url
+      'open': nextEvent.url
     });
-  })
+  }
 }
 
 function callAPI(type, willNotify){
@@ -42,7 +47,7 @@ function callAPI(type, willNotify){
     var data = {};
     data[type] = body[type].slice(0, 3);
     if (type === 'events' && willNotify) {
-      createNotification(data[type]);
+      createNotification(data[type][0]);
     }
     data.website = config.website;
     data.feedback = config.feedback;
