@@ -1,6 +1,6 @@
 {
   "name": "webuild-menubar",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a tiny os x menubar app to display the upcoming events and recently updated repos from webuild.sg",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,27 @@
     "start": "electron .",
     "test": "jshint index.js --config .jshintrc"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webuildsg/osx"
+  },
+  "bugs": {
+    "url": "https://github.com/webuildsg/osx/issues"
+  },
+  "keywords": [
+    "electron",
+    "iojs",
+    "osx",
+    "webuild",
+    "events",
+    "repositories"
+  ],
+  "engines": {
+    "iojs": ">=1.8.1"
+  },
+  "os" : [
+    "darwin"
+  ],
   "license": "MIT",
   "dependencies": {
     "cron": "^1.0.9",
