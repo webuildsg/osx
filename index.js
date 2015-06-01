@@ -6,10 +6,10 @@ var ipc = require('ipc');
 var path = require('path');
 
 var mb = menubar({
+  dir: process.cwd(), // No idea why this is needed for the icon to work
   width: 400,
   height: 480,
-  index: 'file://' + path.join(__dirname, 'index.html'),
-  icon: path.join(__dirname, 'Icon.png')
+  index: 'file://' + path.join(__dirname, 'index.html')
 });
 
 mb.on('ready', function ready () {
