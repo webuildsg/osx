@@ -1,4 +1,5 @@
-[![Build Status](https://img.shields.io/travis/webuildsg/osx/master.svg)](https://travis-ci.org/webuildsg/osx)
+[![Build Status](https://img.shields.io/travis/webuildsg/osx/master.svg)](https://travis-ci.org/webuildsg/osx) [![Dependency Status](https://gemnasium.com/webuildsg/osx.svg)](https://gemnasium.com/webuildsg/osx)
+
 #webuild sg menubar
 
 > a tiny OS X menubar app to display the upcoming events and recently updated repos from webuild.sg
