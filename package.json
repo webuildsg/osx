@@ -1,6 +1,6 @@
 {
   "name": "webuild-menubar",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "a tiny os x menubar app to display the upcoming events and recently updated repos from webuild.sg",
   "main": "index.js",
   "scripts": {
