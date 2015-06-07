@@ -26,18 +26,22 @@ function isWithinAnHour(startTime) {
   return moment(startTime, 'DD MMM YYYY, ddd, hh:mm a').isBefore(moment().add(1, 'hour'))
 }
 
-function createNotification(upcomingEvent) {
+function createNotification(upcomingEvents) {
   // if upcoming event starts within the next hour,
   // create a notification
-  if (isWithinAnHour(upcomingEvent.formatted_time)) {
-    notifier.notify({
-      'title': upcomingEvent.name,
-      'message': 'by ' + upcomingEvent.group_name + ' on ' + upcomingEvent.formatted_time,
-      'icon': path.join(__dirname, 'logo.png'),
-      'wait': true,
-      'open': upcomingEvent.url
-    });
-  }
+  upcomingEvents.forEach(function(upcomingEvent, index) {
+    if (isWithinAnHour(upcomingEvent.formatted_time)) {
+      notifier.notify({
+        'title': upcomingEvent.name,
+        'message': 'by ' + upcomingEvent.group_name + ' on ' + upcomingEvent.formatted_time,
+        'icon': path.join(__dirname, 'logo.png'),
+        'wait': true,
+        'open': upcomingEvent.url,
+        'group': index + 1
+      });
+    }
+  })
+
 }
 
 function callAPI(type, willNotify){
@@ -47,7 +51,7 @@ function callAPI(type, willNotify){
     var data = {};
     data[type] = body[type].slice(0, 3);
     if (type === 'events' && willNotify) {
-      createNotification(data[type][0]);
+      createNotification(data[type]);
     }
     data.website = config.website;
     data.feedback = config.feedback;
@@ -70,7 +74,7 @@ document.getElementById('quit').addEventListener('click', function() {
   ipc.sendSync('event', 'quit');
 })
 
-new CronJob('0 0,30 * * * *', function() {
+new CronJob('0 15 * * * *', function() {
   callAPI('events', true);
   callAPI('repos', true);
 }, null, true, config.timezone);
