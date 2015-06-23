@@ -43,7 +43,7 @@ a:hover, a:active {
 
 #results {
   overflow: auto;
-  height: 430px;
+  height: calc(100% - 40px);
 }
 
 .menu {
@@ -54,6 +54,7 @@ a:hover, a:active {
   width: 100%;
   text-align: right;
   padding: 5px 10px;
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .menu-btn {
