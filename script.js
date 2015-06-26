@@ -6,6 +6,8 @@ var shell = require('shell');
 var CronJob = require('cron').CronJob;
 var moment = require('moment-timezone');
 
+var notifiedEvents = {};
+
 function renderFeedback() {
   var templateSource = document.getElementById('template-feedback').innerHTML;
   var template = Handlebars.compile(templateSource);
@@ -30,18 +32,22 @@ function createNotification(upcomingEvents) {
   // if upcoming event starts within the next hour,
   // create a notification
   upcomingEvents.forEach(function(upcomingEvent, index) {
-    if (isWithinAnHour(upcomingEvent.formatted_time)) {
-      notifier.notify({
-        'title': upcomingEvent.name,
-        'message': 'by ' + upcomingEvent.group_name + ' on ' + upcomingEvent.formatted_time,
-        'icon': path.join(__dirname, 'logo.png'),
-        'wait': true,
-        'open': upcomingEvent.url,
-        'group': index + 1
-      });
+    if (!notifiedEvents.hasOwnProperty(upcomingEvent.id)) {
+      notifiedEvents[upcomingEvent.id] = upcomingEvent.id;
+      ipc.send('event', 'notify');
+
+      if (isWithinAnHour(upcomingEvent.formatted_time)) {
+        notifier.notify({
+          'title': upcomingEvent.name,
+          'message': 'by ' + upcomingEvent.group_name + ' on ' + upcomingEvent.formatted_time,
+          'icon': path.join(__dirname, 'logo.png'),
+          'wait': true,
+          'open': upcomingEvent.url,
+          'group': index + 1
+        });
+      }
     }
   })
-
 }
 
 function callAPI(type, willNotify){
@@ -50,8 +56,14 @@ function callAPI(type, willNotify){
     var body = JSON.parse(this.responseText);
     var data = {};
     data[type] = body[type].slice(0, 3);
-    if (type === 'events' && willNotify) {
-      createNotification(data[type]);
+    if (type === 'events') {
+      if (willNotify) {
+        createNotification(data[type]);
+      } else {
+        data[type].forEach(function(event) {
+          notifiedEvents[event.id] = event.id;
+        });
+      }
     }
     data.website = config.website;
     data.feedback = config.feedback;
