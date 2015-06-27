@@ -7,6 +7,7 @@ var CronJob = require('cron').CronJob;
 var moment = require('moment-timezone');
 
 var notifiedEvents = {};
+var topRepo;
 
 function renderFeedback() {
   var templateSource = document.getElementById('template-feedback').innerHTML;
@@ -28,26 +29,41 @@ function isWithinAnHour(startTime) {
   return moment(startTime, 'DD MMM YYYY, ddd, hh:mm a').isBefore(moment().add(1, 'hour'))
 }
 
-function createNotification(upcomingEvents) {
-  // if upcoming event starts within the next hour,
-  // create a notification
-  upcomingEvents.forEach(function(upcomingEvent, index) {
-    if (!notifiedEvents.hasOwnProperty(upcomingEvent.id)) {
-      notifiedEvents[upcomingEvent.id] = upcomingEvent.id;
-      ipc.send('event', 'notify');
+function createNotification(type, data) {
+  if (type === 'events') {
+    // if upcoming event starts within the next hour,
+    // create a notification
+    data.forEach(function(upcomingEvent, index) {
+      if (!notifiedEvents.hasOwnProperty(upcomingEvent.id)) {
+        notifiedEvents[upcomingEvent.id] = upcomingEvent.id;
+        ipc.send('event', 'notify');
 
-      if (isWithinAnHour(upcomingEvent.formatted_time)) {
-        notifier.notify({
-          'title': upcomingEvent.name,
-          'message': 'by ' + upcomingEvent.group_name + ' on ' + upcomingEvent.formatted_time,
-          'icon': path.join(__dirname, 'logo.png'),
-          'wait': true,
-          'open': upcomingEvent.url,
-          'group': index + 1
-        });
+        if (isWithinAnHour(upcomingEvent.formatted_time)) {
+          notifier.notify({
+            'title': upcomingEvent.name,
+            'message': 'by ' + upcomingEvent.group_name + ' on ' + upcomingEvent.formatted_time,
+            'icon': path.join(__dirname, 'logo.png'),
+            'wait': true,
+            'open': upcomingEvent.url,
+            'group': index + 1
+          });
+        }
       }
+    })
+  } else if (type === 'repos') {
+    var repo = data[0];
+    if (topRepo !== repo.name) {
+      topRepo = repo.name;
+      ipc.send('event', 'notify');
+      notifier.notify({
+        'title': 'New top open source project',
+        'message': repo.name + ' by ' + repo.owner.login,
+        'icon': path.join(__dirname, 'logo.png'),
+        'wait': true,
+        'open': repo.html_url
+      });
     }
-  })
+  }
 }
 
 function callAPI(type, willNotify){
@@ -56,13 +72,15 @@ function callAPI(type, willNotify){
     var body = JSON.parse(this.responseText);
     var data = {};
     data[type] = body[type].slice(0, 3);
-    if (type === 'events') {
-      if (willNotify) {
-        createNotification(data[type]);
-      } else {
+    if (willNotify) {
+      createNotification(type, data[type]);
+    } else {
+      if (type === 'events') {
         data[type].forEach(function(event) {
           notifiedEvents[event.id] = event.id;
         });
+      } else if (type === 'repos') {
+        topRepo = data[type][0].name;
       }
     }
     data.website = config.website;
