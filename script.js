@@ -6,6 +6,9 @@ var shell = require('shell');
 var CronJob = require('cron').CronJob;
 var moment = require('moment-timezone');
 
+var notifiedEvents = {};
+var topRepo;
+
 function renderFeedback() {
   var templateSource = document.getElementById('template-feedback').innerHTML;
   var template = Handlebars.compile(templateSource);
@@ -26,22 +29,47 @@ function isWithinAnHour(startTime) {
   return moment(startTime, 'DD MMM YYYY, ddd, hh:mm a').isBefore(moment().add(1, 'hour'))
 }
 
-function createNotification(upcomingEvents) {
-  // if upcoming event starts within the next hour,
-  // create a notification
-  upcomingEvents.forEach(function(upcomingEvent, index) {
-    if (isWithinAnHour(upcomingEvent.formatted_time)) {
+function createNotification(type, data) {
+
+  // FIXME: this does not work
+  // an issue with terminal-notifier
+  notifier.notify({
+    'remove': 'ALL'
+  });
+
+  if (type === 'events') {
+    data.forEach(function(upcomingEvent, index) {
+      if (!notifiedEvents.hasOwnProperty(upcomingEvent.id)) {
+        notifiedEvents[upcomingEvent.id] = upcomingEvent.id;
+        ipc.send('event', 'notify');
+
+        if (isWithinAnHour(upcomingEvent.formatted_time)) {
+          notifier.notify({
+            'title': upcomingEvent.name,
+            'message': 'by ' + upcomingEvent.group_name + ' on ' + upcomingEvent.formatted_time,
+            'icon': path.join(__dirname, 'logo.png'),
+            'wait': true,
+            'open': upcomingEvent.url,
+            'group': index + 1
+          });
+        }
+      }
+    })
+  } else if (type === 'repos') {
+    var repo = data[0];
+    if (topRepo !== repo.name) {
+      topRepo = repo.name;
+      ipc.send('event', 'notify');
       notifier.notify({
-        'title': upcomingEvent.name,
-        'message': 'by ' + upcomingEvent.group_name + ' on ' + upcomingEvent.formatted_time,
+        'title': 'New top open source project',
+        'message': repo.name + ' by ' + repo.owner.login,
         'icon': path.join(__dirname, 'logo.png'),
         'wait': true,
-        'open': upcomingEvent.url,
-        'group': index + 1
+        'open': repo.html_url,
+        'group': 0
       });
     }
-  })
-
+  }
 }
 
 function callAPI(type, willNotify){
@@ -50,8 +78,16 @@ function callAPI(type, willNotify){
     var body = JSON.parse(this.responseText);
     var data = {};
     data[type] = body[type].slice(0, 3);
-    if (type === 'events' && willNotify) {
-      createNotification(data[type]);
+    if (willNotify) {
+      createNotification(type, data[type]);
+    } else {
+      if (type === 'events') {
+        data[type].forEach(function(event) {
+          notifiedEvents[event.id] = event.id;
+        });
+      } else if (type === 'repos') {
+        topRepo = data[type][0].name;
+      }
     }
     data.website = config.website;
     data.feedback = config.feedback;
@@ -75,6 +111,7 @@ document.getElementById('quit').addEventListener('click', function() {
 })
 
 new CronJob('0 15 * * * *', function() {
+  console.log('Fetching new events and repo...')
   callAPI('events', true);
   callAPI('repos', true);
 }, null, true, config.timezone);
