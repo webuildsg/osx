@@ -6,6 +6,7 @@ body {
   user-select: none;
   -webkit-user-select: none;
   cursor: default;
+  overflow: hidden;
 }
 
 h1 {
@@ -40,14 +41,26 @@ a:hover, a:active {
   text-decoration: underline;
 }
 
+#results {
+  overflow: auto;
+  height: calc(100% - 40px);
+}
+
 .menu {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  height: 20px;
+  width: 100%;
   text-align: right;
   padding: 5px 10px;
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .menu-btn {
   color: #000;
   opacity: .5;
+  margin: 0 0 0 20px;
 }
 
 .menu-btn:hover{
