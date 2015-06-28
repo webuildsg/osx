@@ -30,9 +30,14 @@ function isWithinAnHour(startTime) {
 }
 
 function createNotification(type, data) {
+
+  // FIXME: this does not work
+  // an issue with terminal-notifier
+  notifier.notify({
+    'remove': 'ALL'
+  });
+
   if (type === 'events') {
-    // if upcoming event starts within the next hour,
-    // create a notification
     data.forEach(function(upcomingEvent, index) {
       if (!notifiedEvents.hasOwnProperty(upcomingEvent.id)) {
         notifiedEvents[upcomingEvent.id] = upcomingEvent.id;
@@ -60,7 +65,8 @@ function createNotification(type, data) {
         'message': repo.name + ' by ' + repo.owner.login,
         'icon': path.join(__dirname, 'logo.png'),
         'wait': true,
-        'open': repo.html_url
+        'open': repo.html_url,
+        'group': 0
       });
     }
   }
@@ -105,6 +111,7 @@ document.getElementById('quit').addEventListener('click', function() {
 })
 
 new CronJob('0 15 * * * *', function() {
+  console.log('Fetching new events and repo...')
   callAPI('events', true);
   callAPI('repos', true);
 }, null, true, config.timezone);
