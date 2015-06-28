@@ -46,6 +46,10 @@ a:hover, a:active {
   height: calc(100% - 40px);
 }
 
+#result-repos {
+  margin-bottom: 25px;
+}
+
 .menu {
   position: fixed;
   bottom: 0;
