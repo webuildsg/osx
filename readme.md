@@ -6,6 +6,12 @@
 
 ![](example.png)
 
+## features
+
+1. fetch updated list of events and repositories every hour
+- create osx notification if there are events upcoming in the next hour
+- create osx notification if the top repository changes
+
 ## getting started
 
 1. download [the latest app](https://github.com/webuildsg/osx/releases) and move it to your `Applications` folder.
