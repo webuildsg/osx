@@ -33,13 +33,13 @@
   "license": "MIT",
   "dependencies": {
     "cron": "^1.0.9",
-    "menubar": "^2.0.14",
-    "moment-timezone": "^0.4.0",
+    "menubar": "^5.1.0",
+    "moment-timezone": "^0.5.10",
     "node-notifier": "^4.2.3"
   },
   "devDependencies": {
-    "electron-packager": "~4.2.0",
-    "electron-prebuilt": "~0.28.3",
+    "electron-packager": "~8.3.0",
+    "electron-prebuilt": "~1.4.10",
     "jshint": "^2.8.0"
   }
 }
